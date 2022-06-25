@@ -13,9 +13,10 @@ namespace KingIT.ViewModel
         public List<Pavilions> PavilionsList { get => pavilions; set => Set(ref pavilions, value); }
         
         public Pavilions AddPavilion { get; set; }
-        public Pavilions SelectedPavilion { get; set; }
+        public static Pavilions SelectedPavilion { get; set; }
 
         public List<string> StatusList { get; set; }
+        public List<string> AllStatusList { get; set; }
         public List<string> TCList { get; set; }
         public List<int?> FloorsList { get; set; }
 
@@ -66,23 +67,17 @@ namespace KingIT.ViewModel
             }
         }
 
-        private double squareSort;
-        public double SquareSort
+        private double minValue;
+        public double MinValue { get => minValue; set { minValue = value; SortMinMaxValue(); } }
+        private double maxValue;
+        public double MaxValue { get => maxValue; set { maxValue = value; SortMinMaxValue(); } }
+
+        private void SortMinMaxValue()
         {
-            get => squareSort;
-
-            set
-            {
-                squareSort = value;
-
-                KingITEntities db = new KingITEntities();
-                PavilionsList = db.Pavilions.Where(p => p.ShopCenter_Id == MessengerCViewModel.SelectedShopCentr.ShopCentr_ID).ToList();
-
-                var minVal = PavilionsList.Min(p => p.Square).Value;
-                var maxVal = PavilionsList.Max(p => p.Square).Value;
-
-                //PavilionsList = PavilionsList.Where(squareSort >= minVal && squareSort <= maxVal).ToList();
-            }
+            KingITEntities db = new KingITEntities(); 
+            PavilionsList = db.Pavilions.Where(p => p.ShopCenter_Id == MessengerCViewModel.SelectedShopCentr.ShopCentr_ID &&
+                                                    p.Status != "Удален").ToList();
+            PavilionsList = PavilionsList.Where(t => t.Square >= minValue && t.Square <= maxValue).ToList();
         }
         #endregion
 
@@ -96,11 +91,17 @@ namespace KingIT.ViewModel
                 Pavilions pavilion = new Pavilions()
                 {
                     Pavilion_Number = AddPavilion.Pavilion_Number,
-                    
+                    ShopCenter_Id = MessengerCViewModel.SelectedShopCentr.ShopCentr_ID,
+                    Floor = AddPavilion.Floor,
+                    Status = AddPavilion.Status,
+                    Square = AddPavilion.Square,
+                    CostPerSq_m = AddPavilion.CostPerSq_m,
+                    Cof_Added_value = AddPavilion.Cof_Added_value
                 };
 
                 db.Pavilions.Add(pavilion);
                 db.SaveChanges();
+                MessageBox.Show("Добавлено успешно!");
             }
         }
 
@@ -132,14 +133,27 @@ namespace KingIT.ViewModel
         }
 
         public ICommand EditPavilionCommand { get; }
-        public bool OnEditPavilionCommandExecuted(object param)
-        { 
-            if (SelectedPavilion != null) return true;
-            return false;
-        }
+        public bool OnEditPavilionCommandExecuted(object param) => true;
         public void CanEditPavilionCommandExecute(object param)
         {
-
+            using (KingITEntities db = new KingITEntities())
+            {
+                Pavilions pavilion = db.Pavilions.Where(sh => sh.Pavilion_Number == SelectedPavilion.Pavilion_Number).FirstOrDefault();
+                var result = MessageBox.Show("Вы дейтствительно хотит редактировать данные?", " ", MessageBoxButton.YesNo);
+                switch (result)
+                {
+                    case MessageBoxResult.Yes:
+                        pavilion.Floor = SelectedPavilion.Floor;
+                        pavilion.Status = SelectedPavilion.Status;
+                        pavilion.Square = SelectedPavilion.Square;
+                        pavilion.CostPerSq_m = SelectedPavilion.CostPerSq_m;
+                        pavilion.Cof_Added_value = SelectedPavilion.Cof_Added_value;
+                        db.SaveChanges();
+                        break;
+                    case MessageBoxResult.No:
+                        break;
+                }
+            }
         }
         #endregion
 
@@ -151,6 +165,7 @@ namespace KingIT.ViewModel
 
             AddPavilion = new Pavilions();
             StatusList = PavilionsList.Select(s => s.Status).Distinct().ToList();
+            AllStatusList = db.Pavilions.Select(S => S.Status).Distinct().ToList();
             TCList = db.ShopCentres.Select(s => s.Name).Distinct().ToList();
             FloorsList = PavilionsList.Select(s => s.Floor).Distinct().ToList();
 

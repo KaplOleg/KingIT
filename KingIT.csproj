@@ -67,9 +67,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModel\EmployeesViewModel\EmployeViewModel.cs" />
     <Compile Include="ViewModel\MessengerCViewModel.cs" />
     <Compile Include="ViewModel\Operation\EditViewModel.cs" />
     <Compile Include="ViewModel\PavilionsViewModel.cs" />
+    <Compile Include="View\EmployeesWindows\EmployeesWindow.xaml.cs">
+      <DependentUpon>EmployeesWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MessengerC.xaml.cs">
       <DependentUpon>MessengerC.xaml</DependentUpon>
     </Compile>
@@ -78,6 +82,9 @@
     </Compile>
     <Compile Include="View\OperationWindow\AddWindow.xaml.cs">
       <DependentUpon>AddWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\OperationWindow\EditPavilionWindow.xaml.cs">
+      <DependentUpon>EditPavilionWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\OperationWindow\EditWindow.xaml.cs">
       <DependentUpon>EditWindow.xaml</DependentUpon>
@@ -101,6 +108,10 @@
       <DependentUpon>Authorization.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\EmployeesWindows\EmployeesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MessengerC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -110,6 +121,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\OperationWindow\AddWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\OperationWindow\EditPavilionWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

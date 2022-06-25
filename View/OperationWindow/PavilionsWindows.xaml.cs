@@ -17,7 +17,8 @@ namespace KingIT.View.OperationWindow
 
         private void Button_Click_Edit(object sender, RoutedEventArgs e)
         {
-
+            EditPavilionWindow editPavilion = new EditPavilionWindow();
+            editPavilion.Show();
         }
     }
 }

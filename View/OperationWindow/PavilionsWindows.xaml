@@ -26,10 +26,10 @@
                     HorizontalAlignment="Center" VerticalAlignment="Center" Margin="250 20 0 0">
             <TextBlock><Bold>Сортировать от</Bold></TextBlock>
             <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10 0 10 0"
-                     Height="25" Width="50"/>
+                     Height="25" Width="50" Text="{Binding MinValue}"/>
             <TextBlock><Bold>до</Bold></TextBlock>
             <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10 0 0 0"
-                     Height="25" Width="50"/>
+                     Height="25" Width="50" Text="{Binding MaxValue}"/>
         </StackPanel>
 
         <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 50 0">
@@ -48,7 +48,7 @@
         </StackPanel>
 
         <DataGrid ItemsSource="{Binding PavilionsList}" SelectedItem="{Binding SelectedPavilion}"
-                  AutoGenerateColumns="False" IsReadOnly="True" Margin="20" Width="auto"
+                  AutoGenerateColumns="False" IsReadOnly="True" Margin="20" Width="auto" SelectionMode="Single"
                   Grid.Row="1">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Номер павильона:" Binding="{Binding Pavilion_Number}" />
@@ -56,7 +56,7 @@
                 <DataGridTextColumn Header="Этаж:" Binding="{Binding Floor}"/>
                 <DataGridTextColumn Header="Статус:" Binding="{Binding Status}"/>
                 <DataGridTextColumn Header="Площадь:" Binding="{Binding Square}"/>
-                <DataGridTextColumn Header="Этажность:" Binding="{Binding ShopCentres.NumOfFloors}"/>
+                <DataGridTextColumn Header="Стоимость кв.м:" Binding="{Binding CostPerSq_m}"/>
                 <DataGridTextColumn Header="Коэфф. добавочной стоимости:" Binding="{Binding Cof_Added_value}"/>
             </DataGrid.Columns>
         </DataGrid>
