@@ -1,0 +1,43 @@
+﻿<Window x:Class="KingIT.View.OperationWindow.AddPavilionWinow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KingIT.View.OperationWindow"
+        xmlns:vm="clr-namespace:KingIT.ViewModel"
+        mc:Ignorable="d"
+        Title="AddPavilionWinow" Height="550" Width="450">
+
+    <Window.DataContext>
+        <vm:PavilionsViewModel/>
+    </Window.DataContext>
+    
+    <Grid>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top"
+                    Margin="50 40 0 0">
+            <TextBlock Text="Номер павильона:" Margin="0 0 20 0"/>
+            <TextBlock Text="Название ТЦ:" Margin="0 20 20 0"/>
+            <TextBlock Text="Этаж:" Margin="0 20 20 0"/>
+            <TextBlock Text="Статус:" Margin="0 20 20 0"/>
+            <TextBlock Text="Площадь:" Margin="0 20 20 0"/>
+            <TextBlock Text="Стоимость кв.м.:" Margin="0 20 20 0"/>
+            <TextBlock Text="Коэф. добавоч. стоимости:" Margin="0 20 20 0"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top"
+                    Margin="200 40 0 0">
+            <TextBox Width="150" Height="20" Margin="0 0 20 0" Text="{Binding AddPavilion.Pavilion_Number}"/>
+            <ComboBox Width="150" Height="20" Margin="0 16 20 0" ItemsSource="{Binding TCList}" Text="{Binding AddPavilion.ShopCentres.Name}"/>
+            <TextBox Width="150" Height="20" Margin="0 16 20 0" Text="{Binding AddPavilion.Floor}"/>
+            <TextBox Width="150" Height="20" Margin="0 16 20 0" Text="{Binding AddPavilion.Status}"/>
+            <TextBox Width="150" Height="20" Margin="0 16 20 0" Text="{Binding AddPavilion.Square}"/>
+            <TextBox Width="150" Height="20" Margin="0 16 20 0" Text="{Binding AddPavilion.CostPerSq_m}"/>
+            <TextBox Width="150" Height="20" Margin="0 16 20 0" Text="{Binding AddPavilion.Cof_Added_value}"/>
+        </StackPanel>
+
+        <Button Content="Сохранить"
+                Width="150" Height="25"
+                HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0 0 0 40"
+                Command="{Binding AddPavilionCommand}"/>
+    </Grid>
+</Window>
